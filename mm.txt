@@ -1,0 +1,7 @@
+
+Hi!!
+------
+this is my final project 
+work as shell linux
+------
+So, we learn a bit Golang ;) !! 
