@@ -7,7 +7,7 @@ import (
 )
 
 func EchoCommand(args []string) {
-	fmt.Println(args)
+	// fmt.Println(args)
 	n := len(args[0])
 	str := args[0]
 	found := false
@@ -24,15 +24,19 @@ func EchoCommand(args []string) {
 				fmt.Println(string(result))
 				found = true
 				break
-
-			}else if str[0]=='"'{
-				for p,v := range str{
-					if v =='\\'{
-// result = append(result, )
-
+			} else if str[0] == '"' {
+				for p, v := range str {
+					if v == '\\' {
+						if p+1 < len(str) && (str[p+1] == '$' || str[p+1] == '\'' || str[p+1] == '"' || str[p+1] == '\\') {
+							p++
+						} else {
+							result = append(result, v)
+						}
+					} else {
+						result = append(result, v)
 					}
 				}
-				fmt.Println(string(result))
+				fmt.Println(string(result[1 : len(result)-1]))
 				found = true
 				break
 			} else if str[j] == '$' {
