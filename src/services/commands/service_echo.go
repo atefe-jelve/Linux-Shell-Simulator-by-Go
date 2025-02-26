@@ -7,11 +7,11 @@ import (
 )
 
 func EchoCommand(args []string) {
-	n := len(args[0])
 	str := args[0]
 	found := false
+
 	for i := 0; i < len(args); i++ {
-		for j := 0; j < n; j++ {
+		for j := 0; j < len(args[0]); j++ {
 
 			result := []rune{}
 			if str[0] == '\'' {
@@ -42,10 +42,7 @@ func EchoCommand(args []string) {
 
 			} else if str[j] == '$' {
 				command := str[j+1:]
-				path := str[:j]
-				fmt.Println(command)
-				path_ := os.Getenv(command)
-				fmt.Println(path + path_)
+				fmt.Println(str[:j] + os.Getenv(command))
 				found = true
 				break
 			}

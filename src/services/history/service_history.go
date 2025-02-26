@@ -44,6 +44,11 @@ func HistoryCommand(args []string) {
 		return
 	}
 
+	if len(commandObjs) == 0 {
+		fmt.Println("empty command history")
+		return
+	}
+
 	commandsMap := make(map[string]CommandInfo)
 	for _, commandObj := range commandObjs {
 		if val, exists := commandsMap[commandObj.Text]; exists {

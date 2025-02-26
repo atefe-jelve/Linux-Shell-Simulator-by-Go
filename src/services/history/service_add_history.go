@@ -5,12 +5,15 @@ import (
 	"projectshell/src/databases"
 	command_model "projectshell/src/services/commands"
 	session_user "projectshell/src/services/users"
-	"strings"
 	"projectshell/src/utils"
-
+	"strings"
 )
 
 func LogHistory(args []string) {
+
+	if args[0] == "history" {
+		return
+	}
 
 	commandText := strings.Join(args, " ")
 

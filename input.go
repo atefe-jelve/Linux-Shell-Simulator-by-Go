@@ -64,8 +64,7 @@ func ReceiveCommand() int {
 
 			command(args[1:])
 			if cmd == "exit" {
-				id := utils.GetUserId("anonymous")
-				utils.CleanHistory(id)
+				utils.CleanHistory(utils.GetUserId("anonymous"))
 				break
 			}
 		} else {
