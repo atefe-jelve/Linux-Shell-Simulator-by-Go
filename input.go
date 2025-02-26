@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"projectshell/src/utils"
 	commandsservices "projectshell/src/services/commands"
 	historyservices "projectshell/src/services/history"
 	userservices "projectshell/src/services/users"
@@ -49,7 +50,7 @@ func ReceiveCommand() int {
 
 		} else {
 			commandsservices.EchoCommand([]string{input[5:]})
-			historyservices.LogHistory(args)
+			historyservices.LogHistory([]string{input})
 
 		}
 
@@ -63,6 +64,8 @@ func ReceiveCommand() int {
 
 			command(args[1:])
 			if cmd == "exit" {
+				id := utils.GetUserId("anonymous")
+				utils.CleanHistory(id)
 				break
 			}
 		} else {

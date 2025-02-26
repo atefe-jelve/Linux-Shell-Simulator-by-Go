@@ -2,9 +2,13 @@ package databases
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"time"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 const (
@@ -24,7 +28,19 @@ func init() {
 	dsn := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
 		dbHost, dbPort, dbName, dbUser, dbPass)
 
-	sesssion, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	customLogger := logger.New(
+		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
+		logger.Config{
+			SlowThreshold:             200 * time.Millisecond, // Slow SQL threshold
+			LogLevel:                  logger.Warn,            // Log level
+			IgnoreRecordNotFoundError: true,                   // Ignore ErrRecordNotFound error for logger
+			Colorful:                  true,                   // Enable color
+		},
+	)
+
+	sesssion, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		Logger: customLogger,
+	})
 	if err != nil {
 		err = fmt.Errorf("unable to connect to database: %w", err)
 		panic(err)

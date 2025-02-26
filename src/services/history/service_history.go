@@ -5,6 +5,7 @@ import (
 	"projectshell/src/databases"
 	command_model "projectshell/src/services/commands"
 	session_user "projectshell/src/services/users"
+	"projectshell/src/utils"
 	"sort"
 	"strings"
 	"time"
@@ -27,13 +28,13 @@ func HistoryCommand(args []string) {
 
 	currentUser := session_user.GetCurrentUser()
 	if currentUser == "" {
-		id = getUserId("anonymous")
+		id = utils.GetUserId("anonymous")
 	} else {
-		id = getUserId(currentUser)
+		id = utils.GetUserId(currentUser)
 	}
 
-	if len(args) > 0 && args[0] ==  "clean" {
-		CleanHistory(id)
+	if len(args) > 0 && args[0] == "clean" {
+		utils.CleanHistory(id)
 		return
 	}
 

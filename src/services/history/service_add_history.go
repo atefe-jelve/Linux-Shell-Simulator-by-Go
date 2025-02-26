@@ -6,6 +6,8 @@ import (
 	command_model "projectshell/src/services/commands"
 	session_user "projectshell/src/services/users"
 	"strings"
+	"projectshell/src/utils"
+
 )
 
 func LogHistory(args []string) {
@@ -14,10 +16,10 @@ func LogHistory(args []string) {
 
 	currentUser := session_user.GetCurrentUser()
 	if currentUser == "" {
-		id := getUserId("anonymous")
+		id := utils.GetUserId("anonymous")
 		createHistory(id, commandText)
 	} else {
-		id := getUserId(currentUser)
+		id := utils.GetUserId(currentUser)
 		createHistory(id, commandText)
 	}
 }
@@ -34,15 +36,4 @@ func createHistory(id uint, commandText string) {
 		fmt.Printf("Error creating command: %v\n", err)
 		return
 	}
-}
-
-func getUserId(username string) uint {
-
-	db := databases.GetDB()
-	userObj := &session_user.User{}
-	if err := db.Where("user_name = ?", username).First(userObj).Error; err != nil {
-		return 0
-	}
-
-	return userObj.ID
 }

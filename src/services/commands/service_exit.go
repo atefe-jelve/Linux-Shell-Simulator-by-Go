@@ -22,4 +22,6 @@ func ExitCommand(args []string) {
 		fmt.Println("too many arguments")
 		ExitStatus = 99999
 	}
+
+
 }

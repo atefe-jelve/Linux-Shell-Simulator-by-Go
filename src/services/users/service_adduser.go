@@ -8,7 +8,7 @@ import (
 
 func AddUserCommand(args []string) {
 	if len(args) < 1 {
-		fmt.Println("Not enough arguments provided.")
+		// fmt.Println("Not enough arguments provided.")
 		return
 	}
 
@@ -17,11 +17,11 @@ func AddUserCommand(args []string) {
 	name := args[0]
 	userObj := &User{}
 
-	err := db.Where("user_name = ?", name).First(&userObj).Error
+    err := db.Where("user_name = ?", name).First(&userObj).Error
     if err != nil && err != gorm.ErrRecordNotFound {
-        fmt.Printf("Error retrieving user: %v\n", err)
+        // Silently handle other errors
         return
-    }
+	}
 
     if err == nil {
         fmt.Println("duplicate user exists with this username")

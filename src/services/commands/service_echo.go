@@ -7,15 +7,14 @@ import (
 )
 
 func EchoCommand(args []string) {
-	// fmt.Println(args)
 	n := len(args[0])
 	str := args[0]
 	found := false
 	for i := 0; i < len(args); i++ {
 		for j := 0; j < n; j++ {
+
 			result := []rune{}
 			if str[0] == '\'' {
-				// result := []rune{}
 				for _, v := range str {
 					if v != '\'' {
 						result = append(result, v)
@@ -24,6 +23,7 @@ func EchoCommand(args []string) {
 				fmt.Println(string(result))
 				found = true
 				break
+
 			} else if str[0] == '"' {
 				for p, v := range str {
 					if v == '\\' {
@@ -39,6 +39,7 @@ func EchoCommand(args []string) {
 				fmt.Println(string(result[1 : len(result)-1]))
 				found = true
 				break
+
 			} else if str[j] == '$' {
 				command := str[j+1:]
 				path := str[:j]
@@ -61,7 +62,3 @@ func EchoCommand(args []string) {
 		}
 	}
 }
-
-// func compareTypeWithString(v interface{}, typeName string) bool {
-// 	return reflect.TypeOf(v).String() == typeName
-// }
