@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"projectshell/src/databases"
+	"gorm.io/gorm"
 )
 
 func AddUserCommand(args []string) {
@@ -16,10 +17,16 @@ func AddUserCommand(args []string) {
 	name := args[0]
 	userObj := &User{}
 
-	if err := db.Where("user_name = ?", name).First(userObj).Error; err == nil {
-		fmt.Println("duplicate user exists with this username")
-		return
-	}
+	err := db.Where("user_name = ?", name).First(&userObj).Error
+    if err != nil && err != gorm.ErrRecordNotFound {
+        fmt.Printf("Error retrieving user: %v\n", err)
+        return
+    }
+
+    if err == nil {
+        fmt.Println("duplicate user exists with this username")
+        return
+    }
 
 	var password_ string
 	if len(args) > 1 {

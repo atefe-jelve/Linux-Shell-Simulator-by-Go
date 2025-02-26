@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"fmt"
 	"projectshell/src/databases"
 	command_model "projectshell/src/services/commands"
 )
@@ -20,5 +21,6 @@ func CleanHistory(id uint) error {
 	if result.RowsAffected == 0 {
 		return errors.New("user not found")
 	}
+	fmt.Println("empty command history")
 	return nil
 }

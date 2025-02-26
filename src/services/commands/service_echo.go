@@ -1,43 +1,3 @@
-// package services
-
-// import (
-// 	"fmt"
-// )
-
-// func EchoCommand(args []string) {
-// 	fmt.Println(args)
-// 	inQuotes := false
-// 	var words []string
-// 	currentWord := ""
-// 	// space := " "
-
-// 	for _, arg := range args {
-// 		for _, char := range arg {
-// 			if char == '\'' {
-// 				if inQuotes {
-// 					words = append(words, currentWord)
-// 					currentWord = ""
-// 					inQuotes = false
-// 				} else {
-// 					inQuotes = true
-// 				}
-// 			} else if inQuotes {
-// 				currentWord += string(char)
-// 			}
-// 		}
-// 	}
-
-// 	if inQuotes {
-// 		words = append(words, currentWord)
-// 	}
-
-// 	fmt.Println(words)
-// }
-
-// func compareTypeWithString(v interface{}, typeName string) bool {
-// 	return reflect.TypeOf(v).String() == typeName
-// }
-
 package services
 
 import (
@@ -48,14 +8,31 @@ import (
 
 func EchoCommand(args []string) {
 	fmt.Println(args)
-
 	n := len(args[0])
 	str := args[0]
 	found := false
 	for i := 0; i < len(args); i++ {
 		for j := 0; j < n; j++ {
+			result := []rune{}
 			if str[0] == '\'' {
-				fmt.Println(str[1 : len(str)-1])
+				// result := []rune{}
+				for _, v := range str {
+					if v != '\'' {
+						result = append(result, v)
+					}
+				}
+				fmt.Println(string(result))
+				found = true
+				break
+
+			}else if str[0]=='"'{
+				for p,v := range str{
+					if v =='\\'{
+// result = append(result, )
+
+					}
+				}
+				fmt.Println(string(result))
 				found = true
 				break
 			} else if str[j] == '$' {

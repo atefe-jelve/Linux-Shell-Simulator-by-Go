@@ -12,7 +12,7 @@ import (
 
 var commands = map[string]func([]string){
 	"exit": commandsservices.ExitCommand,
-	// "echo": commandsservices.EchoCommand,
+	"echo": commandsservices.EchoCommand,
 	"cat":  commandsservices.CatCommand,
 	"type": commandsservices.TypeCommand,
 	"pwd":  commandsservices.PwdCommand,
@@ -44,11 +44,13 @@ func ReceiveCommand() int {
 		}
 
 		input := scanner.Text()
-		// args := strings.Fields(Input)
 		if !strings.HasPrefix(input, "echo") {
 			args = strings.Fields(input)
-		} else{
+
+		} else {
 			commandsservices.EchoCommand([]string{input[5:]})
+			historyservices.LogHistory(args)
+
 		}
 
 		if len(args) == 0 {
@@ -57,7 +59,6 @@ func ReceiveCommand() int {
 
 		cmd := args[0]
 		if command, ok := commands[cmd]; ok {
-
 			historyservices.LogHistory(args)
 
 			command(args[1:])

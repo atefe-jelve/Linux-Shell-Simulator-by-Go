@@ -32,9 +32,11 @@ func HistoryCommand(args []string) {
 		id = getUserId(currentUser)
 	}
 
-	if len(args) > 0 {
+	if len(args) > 0 && args[0] ==  "clean" {
 		CleanHistory(id)
+		return
 	}
+
 	var commandObjs []command_model.Command
 	if err := db.Where("created_by = ?", id).Find(&commandObjs).Error; err != nil {
 		fmt.Printf("Error retrieving commands: %v\n", err)
