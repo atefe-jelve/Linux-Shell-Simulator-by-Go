@@ -8,21 +8,21 @@ import (
 	"strings"
 )
 
-var built_in_commands = []string{"exit", "echo", "cat", "type", "ls", "pwd", "cd"}
+var built_in_commands = []string{"exit", "echo", "cat", "type", "ls", "pwd", "cd", "clear"}
 
 func TypeCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
 	if len(args) == 0 {
-		fmt.Println("Please insert a command to check")
+		fmt.Fprintln(outputWriter, "Please insert a command to check")
 		return
 	}
 
 	cmd := args[0]
 	if IsBuiltin(cmd) {
-		fmt.Printf("%s is a shell builtin\n", cmd)
+		fmt.Fprintf(outputWriter, "%s is a shell builtin\n", cmd)
 	} else if fullPath, found := findExecutable(cmd); found {
-		fmt.Printf("%s is %s\n", cmd, fullPath)
+		fmt.Fprintf(outputWriter, "%s is %s\n", cmd, fullPath)
 	} else {
-		fmt.Printf("%s: command not found\n", cmd)
+		fmt.Fprintf(outputWriter, "%s: command not found\n", cmd)
 	}
 }
 

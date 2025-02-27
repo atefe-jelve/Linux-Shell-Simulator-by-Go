@@ -6,24 +6,27 @@ import (
 	"strconv"
 )
 
+const (
+	StatusOK    = 0
+	StatusError = 99999
+)
+
 var ExitStatus int
 
 func ExitCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
-
-	if len(args) == 0 {
-		ExitStatus = 0
-	} else if len(args) == 1 {
+	switch len(args) {
+	case 0:
+		ExitStatus = StatusOK
+	case 1:
 		status, err := strconv.Atoi(args[0])
 		if err != nil {
-			fmt.Println("Invalid status code")
-
-			ExitStatus = 99999
+			fmt.Fprintln(errorWriter, "Invalid status code")
+			ExitStatus = StatusError
 		} else {
 			ExitStatus = status
 		}
-	} else {
-		fmt.Println("too many arguments")
-		ExitStatus = 99999
+	default:
+		fmt.Fprintln(errorWriter, "Too many arguments")
+		ExitStatus = StatusError
 	}
-
 }
