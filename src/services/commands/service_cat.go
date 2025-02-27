@@ -6,9 +6,7 @@ import (
 	"os"
 )
 
-
-
-func CatCommand(args []string) {
+func CatCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
 	n := len(args)
 
 	for i := 0; i < n; i++ {

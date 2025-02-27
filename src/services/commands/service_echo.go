@@ -2,11 +2,12 @@ package services
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"strings"
 )
 
-func EchoCommand(args []string) {
+func EchoCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
 	str := args[0]
 	found := false
 

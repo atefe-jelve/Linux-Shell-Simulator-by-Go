@@ -2,11 +2,12 @@ package services
 
 import (
 	"fmt"
+	"io"
 	"os"
 )
 
-func CdCommand(path []string) {
-	if len(path) < 1{
+func CdCommand(path []string, outputWriter io.Writer, errorWriter io.Writer) {
+	if len(path) < 1 {
 		fmt.Println()
 		return
 	}

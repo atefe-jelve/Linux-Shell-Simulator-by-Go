@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"io"
 	"projectshell/src/databases"
 	command_model "projectshell/src/services/commands"
 	session_user "projectshell/src/services/users"
@@ -21,7 +22,7 @@ type kv struct {
 	Value CommandInfo
 }
 
-func HistoryCommand(args []string) {
+func HistoryCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
 
 	db := databases.GetDB()
 	var id uint

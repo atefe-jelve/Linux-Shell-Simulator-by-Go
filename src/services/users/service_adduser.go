@@ -2,12 +2,13 @@ package services
 
 import (
 	"fmt"
+	"io"
 	"projectshell/src/databases"
 
 	"gorm.io/gorm"
 )
 
-func AddUserCommand(args []string) {
+func AddUserCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
 	if len(args) < 1 {
 		// fmt.Println("Not enough arguments provided.")
 		return

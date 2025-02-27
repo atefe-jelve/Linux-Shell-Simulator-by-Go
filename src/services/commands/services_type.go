@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -9,7 +10,7 @@ import (
 
 var built_in_commands = []string{"exit", "echo", "cat", "type", "ls", "pwd", "cd"}
 
-func TypeCommand(args []string) {
+func TypeCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
 	if len(args) == 0 {
 		fmt.Println("Please insert a command to check")
 		return

@@ -2,12 +2,13 @@ package services
 
 import (
 	"fmt"
+	"io"
 	"projectshell/src/databases"
 )
 
-func LoginCommand(args []string) {
+func LoginCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
 
-	if len(args) < 1 && args[0] == "clean"{
+	if len(args) < 1 && args[0] == "clean" {
 		fmt.Println("Not enough arguments provided.")
 		return
 	}
