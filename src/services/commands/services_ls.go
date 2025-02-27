@@ -2,18 +2,23 @@ package services
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"os"
 )
 
-func LsCommand([]string) {
+// var outputWriter io.Writer = os.Stdout
+
+func LsCommand(args []string, writer io.Writer) {
 	files_directory, err := os.ReadDir("./")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	for _, file := range files_directory {
-		fmt.Print(file.Name(), "  ")
+		fmt.Fprint(writer, file.Name(), " ")
+		// fmt.Print(file.Name(), "  ")
 	}
-	fmt.Println()
+	// fmt.Println()
+	fmt.Fprintln(writer)
 }
