@@ -8,11 +8,13 @@ import (
 	"strings"
 )
 
-var built_in_commands = []string{"exit", "echo", "cat", "type", "ls", "pwd", "cd", "clear"}
+var builtInCommands = []string{"exit", "echo", "cat", "type", "ls", "pwd", "cd", "clear"}
 
+// TypeCommand checks if the given command exists and writes to outputWriter (normal result) or errorWriter (errors).
 func TypeCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
+	
 	if len(args) == 0 {
-		fmt.Fprintln(outputWriter, "Please insert a command to check")
+		fmt.Fprintln(errorWriter, "Please insert a command to check")
 		return
 	}
 
@@ -22,12 +24,12 @@ func TypeCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
 	} else if fullPath, found := findExecutable(cmd); found {
 		fmt.Fprintf(outputWriter, "%s is %s\n", cmd, fullPath)
 	} else {
-		fmt.Fprintf(outputWriter, "%s: command not found\n", cmd)
+		fmt.Fprintf(errorWriter, "%s: command not found\n", cmd)
 	}
 }
 
 func IsBuiltin(cmd string) bool {
-	for _, builtin := range built_in_commands {
+	for _, builtin := range builtInCommands {
 		if cmd == builtin {
 			return true
 		}

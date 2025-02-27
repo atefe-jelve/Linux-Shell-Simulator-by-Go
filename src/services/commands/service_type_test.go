@@ -14,7 +14,7 @@ func TestTypeCommand(t *testing.T) {
 		{args: []string{}, expectedOutput: "", expectedError: "Please insert a command to check\n"},
 		{args: []string{"fakecommand"}, expectedOutput: "", expectedError: "fakecommand: command not found\n"},
 		{args: []string{"exit"}, expectedOutput: "exit is a shell builtin\n", expectedError: ""},
-		{args: []string{"invalid"}, expectedOutput: "git is /usr/bin/git\n", expectedError: ""},
+		{args: []string{"git"}, expectedOutput: "git is /usr/bin/git\n", expectedError: ""},
 	}
 
 	for _, tt := range tests {

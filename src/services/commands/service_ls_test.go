@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestCatCommands(t *testing.T) {
+func TestLsCommand(t *testing.T) {
 	// Store the original working directory to restore later
 	originalDir, err := os.Getwd()
 	if err != nil {
@@ -27,24 +27,25 @@ func TestCatCommands(t *testing.T) {
 	defer os.Chdir(originalDir) // Ensure the original directory is restored after the test
 
 	// Create some test files in the temporary directory
-		if err := os.WriteFile("file.txt", []byte("test content"), 0644); err != nil {
+	filesToCreate := []string{"file1.txt", "file2.txt", "file3.txt"}
+	for _, filename := range filesToCreate {
+		if err := os.WriteFile(filename, []byte("test content"), 0644); err != nil {
 			t.Fatalf("Failed to create test file: %v", err)
 		}
-	
+	}
 
 	tests := []struct {
 		args           []string
 		expectedOutput string
 		expectedError  string
 	}{
-		{args: []string{}, expectedOutput: "", expectedError: "No files provided\n"},
-		{args: []string{"something"}, expectedOutput: "", expectedError: "Error opening file something: open something: no such file or directory\n"},
-		{args: []string{"file.txt"}, expectedOutput: "test content\n", expectedError: ""},
+		{args: []string{}, expectedOutput: "file1.txt file2.txt file3.txt\n", expectedError: ""},
+		{args: []string{"something"}, expectedOutput: "", expectedError: "Ls does not accept arguments\n"},
 	}
 
 	for _, tt := range tests {
 		var outputWriter, errorWriter bytes.Buffer
-		CatCommand(tt.args, &outputWriter, &errorWriter)
+		LsCommand(tt.args, &outputWriter, &errorWriter)
 
 		if outputWriter.String() != tt.expectedOutput {
 			t.Errorf("For args %v, expected output %q, got %q", tt.args, tt.expectedOutput, outputWriter.String())

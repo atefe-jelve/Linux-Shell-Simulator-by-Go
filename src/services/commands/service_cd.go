@@ -6,15 +6,24 @@ import (
 	"os"
 )
 
-func CdCommand(path []string, outputWriter io.Writer, errorWriter io.Writer) {
-	if len(path) < 1 {
-		fmt.Println()
+func CdCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
+
+	if len(args) == 0 {
+		fmt.Fprintln(errorWriter, "No directory provided")
 		return
 	}
-	err := os.Chdir(path[0])
+
+	if len(args) > 1 {
+		fmt.Fprintln(errorWriter, "Only one directory can be provided")
+		return
+	}
+
+	err := os.Chdir(args[0])
 	if err != nil {
-		fmt.Printf("Error changing directory: %v\n", err)
+		fmt.Fprintf(errorWriter, "Error changing directory to %s: %v\n", args[0], err)
 		return
 	}
-	fmt.Printf("Changed directory to: %s\n", path[0])
+
+	fmt.Fprintf(outputWriter, "Changed directory to: %s\n", args[0])
+
 }

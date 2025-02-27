@@ -7,6 +7,7 @@ import (
 )
 
 var OutputWriter io.Writer = os.Stdout
+
 var ErrorBuffer bytes.Buffer
 
 func SetOutputFile(filePath string, appendMode bool) error {
