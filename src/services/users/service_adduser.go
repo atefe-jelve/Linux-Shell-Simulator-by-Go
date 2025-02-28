@@ -9,8 +9,9 @@ import (
 )
 
 func AddUserCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
-	if len(args) < 1 {
-		// fmt.Println("Not enough arguments provided.")
+
+	if len(args) == 0 || args[0] == "" {
+		fmt.Fprintln(outputWriter, "Not enough arguments provided.")
 		return
 	}
 
@@ -21,14 +22,16 @@ func AddUserCommand(args []string, outputWriter io.Writer, errorWriter io.Writer
 
 	err := db.Where("user_name = ?", name).First(&userObj).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
+		fmt.Fprintf(errorWriter, "Database error: %v\n", err)
 		return
 	}
 
 	if err == nil {
 		if args[0] != "anonymous" {
-			fmt.Println("duplicate user exists with this username")
+			fmt.Fprintln(errorWriter, "Duplicate user exists with this username.")
 			return
 		} else {
+			// "anonymous" user exists — silently return (no error message needed per my logic).
 			return
 		}
 	}
@@ -44,9 +47,9 @@ func AddUserCommand(args []string, outputWriter io.Writer, errorWriter io.Writer
 	}
 
 	if err := db.Create(&newUser).Error; err != nil {
-		fmt.Printf("Error creating user: %v\n", err)
+		fmt.Fprintf(errorWriter, "Error creating user: %v\n", err)
 		return
 	}
 
-	fmt.Println("user created successfully")
+	fmt.Fprintln(outputWriter, "User created successfully.")
 }

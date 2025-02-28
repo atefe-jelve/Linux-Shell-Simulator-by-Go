@@ -8,22 +8,20 @@ import (
 
 func LoginCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
 
-	if len(args) < 1 && args[0] == "clean" {
-		fmt.Println("Not enough arguments provided.")
+	if len(args) < 1 || args[0] == "clean" {
+		fmt.Fprintln(outputWriter, "Not enough arguments provided.")
 		return
 	}
 
-	var password_ string
-	if len(args) > 1 {
-		password_ = args[1]
-	}
-
 	username := args[0]
-	password := password_
+	var password string
+	if len(args) > 1 {
+		password = args[1]
+	}
 
 	ok, err := AuthenticateUser(username, password)
 	if err != nil || !ok {
-		fmt.Println("Invalid credentials")
+		fmt.Fprintln(outputWriter, "Invalid credentials")
 		return
 	}
 

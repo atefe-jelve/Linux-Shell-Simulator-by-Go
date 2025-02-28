@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -56,6 +57,24 @@ func GetDB() *gorm.DB {
 	return db
 }
 
-// func SetDB(database *gorm.DB) {
-// 	db = database
-// }
+var testDB *gorm.DB
+
+func SetDB(mockDB *gorm.DB) {
+	db = mockDB
+}
+
+func SetupTestDB(models ...interface{}) {
+	var err error
+	testDB, err = gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect test database")
+	}
+
+	if err := testDB.AutoMigrate(models...); err != nil {
+		panic(fmt.Sprintf("failed to migrate models: %v", err))
+	}
+}
+
+func GetTestDB() *gorm.DB {
+	return testDB
+}

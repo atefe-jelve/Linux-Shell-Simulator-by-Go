@@ -23,7 +23,7 @@ func IsSessionValid(username string) bool {
 }
 
 // GetCurrentUser returns the current logged-in user.
-func GetCurrentUser() string {
+var GetCurrentUser = func() string {
 	cacheMutex.Lock()
 	defer cacheMutex.Unlock()
 	return sessionCache["user_login"]
