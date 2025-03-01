@@ -1,4 +1,3 @@
-
 package main
 
 import (
@@ -81,6 +80,13 @@ func ReceiveCommand() int {
 			if !commandsservices.IsBuiltin(cmd) {
 				commandsservices.ExecuteCommand(cmd, args[1:], outputservices.OutputWriter, &outputservices.ErrorBuffer)
 
+				if outputservices.ErrorBuffer.Len() > 0 {
+					fmt.Print(outputservices.ErrorBuffer.String())
+					outputservices.ErrorBuffer.Reset()
+				} else {
+					fmt.Fprintf(os.Stderr, "%s: command not found\n", cmd)
+				}
+
 			}
 		}
 
@@ -99,7 +105,7 @@ func handleEcho(input string) {
 	if len(input) > 5 {
 		commandsservices.EchoCommand([]string{input[5:]}, outputservices.OutputWriter, &outputservices.ErrorBuffer)
 		historyservices.LogHistory([]string{input})
-	}else{
+	} else {
 		fmt.Println()
 	}
 }
@@ -115,7 +121,7 @@ func handleRedirection(info outputservices.RedirectionInfo) {
 	}
 }
 
-// Reset redirection (restore
+// Reset redirection
 func resetRedirection(info outputservices.RedirectionInfo) {
 	if info.ErrorRedirection {
 		if err := outputservices.WriteErrorToFile(info.FilePath); err != nil {

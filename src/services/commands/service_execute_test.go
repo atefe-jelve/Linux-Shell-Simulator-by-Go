@@ -12,7 +12,7 @@ func TestStatusCommand(t *testing.T) {
 		expectedOutput string
 		expectedError  string
 	}{
-		{command: "", args: []string{}, expectedOutput: "", expectedError: "No command provided\n"},
+		{command: "unknowncommand", args: []string{}, expectedOutput: "", expectedError: "unknowncommand: command not found\n"},
 		{command: "echo",args: []string{"hello"}, expectedOutput: "hello\n", expectedError: ""},
 	}
 

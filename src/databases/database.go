@@ -16,8 +16,8 @@ const (
 	dbHost = "localhost"
 	dbPort = "5432"
 	dbName = "postgres"
-	dbUser = "tecmint"
-	dbPass = "securep@wd"
+	dbUser = "***"
+	dbPass = "***"
 )
 
 var db *gorm.DB

@@ -28,5 +28,6 @@ func ExitCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
 	default:
 		fmt.Fprintln(errorWriter, "Too many arguments")
 		ExitStatus = StatusError
+		
 	}
 }

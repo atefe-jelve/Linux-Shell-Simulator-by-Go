@@ -10,7 +10,7 @@ import (
 
 var builtInCommands = []string{"exit", "echo", "cat", "type", "ls", "pwd", "cd", "clear"}
 
-// TypeCommand checks if the given command exists and writes to outputWriter (normal result) or errorWriter (errors).
+// TypeCommand checks if the given command exists and writes to outputWriter
 func TypeCommand(args []string, outputWriter io.Writer, errorWriter io.Writer) {
 	
 	if len(args) == 0 {
